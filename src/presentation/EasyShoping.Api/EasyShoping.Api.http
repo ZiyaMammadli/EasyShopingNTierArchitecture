@@ -1,0 +1,6 @@
+@EasyShoping.Api_HostAddress = http://localhost:5063
+
+GET {{EasyShoping.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
