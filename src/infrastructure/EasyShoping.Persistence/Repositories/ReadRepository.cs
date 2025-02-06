@@ -2,8 +2,10 @@
 using EasyShoping.Domain.Repositories;
 using EasyShoping.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
 
 namespace EasyShoping.Persistence.Repositories;
 
@@ -31,25 +33,36 @@ public class ReadRepository<Tentity> : IReadRepository<Tentity> where Tentity : 
     public async Task<Tentity> GetSingleAsync(Expression<Func<Tentity, bool>> expression, Func<IQueryable<Tentity>, IIncludableQueryable<Tentity, object>>? include = null, bool enableTracking = false)
     {
         var query= DbTable.AsQueryable();
+        query = query.Where(expression);
         if(!enableTracking) query = query.AsNoTracking();
-        if(expression is not null) query = query.Where(expression);
         if(include is not null) query = include(query); 
 
-        return await query.SingleAsync();
+        return await query.FirstOrDefaultAsync();
     }
 
-    public Task<List<Tentity>> GetAllByPagingAsync(Expression<Func<Tentity, bool>>? expression = null, Func<IQueryable<Tentity>, IIncludableQueryable<Tentity, object>>? include = null, Func<IQueryable<Tentity>, IOrderedQueryable<Tentity>>? orderBy = null, bool enableTracking = false, int currentPage = 1, int pageSize = 3)
+    public async Task<List<Tentity>> GetAllByPagingAsync(Expression<Func<Tentity, bool>>? expression = null, Func<IQueryable<Tentity>, IIncludableQueryable<Tentity, object>>? include = null, Func<IQueryable<Tentity>, IOrderedQueryable<Tentity>>? orderBy = null, bool enableTracking = false, int currentPage = 1, int pageSize = 3)
     {
-        throw new NotImplementedException();
+        var query=DbTable.AsQueryable();
+        if(!enableTracking) query = query.AsNoTracking();
+        if(expression is not null) query=query.Where(expression);
+        if (include is not null) query = include(query);
+        if(orderBy is not null) return await orderBy(query).Skip((currentPage - 1)* pageSize).Take(pageSize).ToListAsync();
+
+        return await query.Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync();
     }
 
-    public IQueryable<Tentity> Find(Expression<Func<Tentity, bool>> expression)
+    public IQueryable<Tentity> Find(Expression<Func<Tentity, bool>> expression, bool enableTracking = false)
     {
-        throw new NotImplementedException();
+        if (!enableTracking) DbTable.AsNoTracking();
+        return DbTable.Where(expression);
     }
 
     public Task<int> CountAsync(Expression<Func<Tentity, bool>>? expression = null)
     {
-        throw new NotImplementedException();
+        DbTable.AsNoTracking();
+
+        return expression is not null 
+            ? DbTable.Where(expression).CountAsync() 
+            : DbTable.CountAsync();
     }
 }

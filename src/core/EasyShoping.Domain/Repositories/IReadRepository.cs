@@ -19,6 +19,6 @@ public interface IReadRepository<Tentity> where Tentity : class, IBaseEntity, ne
         Func<IQueryable<Tentity>, IOrderedQueryable<Tentity>>? orderBy = null,
         bool enableTracking = false, int currentPage = 1, int pageSize = 3);
 
-    IQueryable<Tentity> Find(Expression<Func<Tentity, bool>> expression);
+    IQueryable<Tentity> Find(Expression<Func<Tentity, bool>> expression, bool enableTracking = false);
     Task<int> CountAsync(Expression<Func<Tentity, bool>>? expression = null);
 }
