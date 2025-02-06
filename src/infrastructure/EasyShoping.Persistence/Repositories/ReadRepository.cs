@@ -32,21 +32,21 @@ public class ReadRepository<Tentity> : IReadRepository<Tentity> where Tentity : 
 
     public async Task<Tentity> GetSingleAsync(Expression<Func<Tentity, bool>> expression, Func<IQueryable<Tentity>, IIncludableQueryable<Tentity, object>>? include = null, bool enableTracking = false)
     {
-        var query= DbTable.AsQueryable();
+        var query = DbTable.AsQueryable();
         query = query.Where(expression);
-        if(!enableTracking) query = query.AsNoTracking();
-        if(include is not null) query = include(query); 
+        if (!enableTracking) query = query.AsNoTracking();
+        if (include is not null) query = include(query);
 
         return await query.FirstOrDefaultAsync();
     }
 
     public async Task<List<Tentity>> GetAllByPagingAsync(Expression<Func<Tentity, bool>>? expression = null, Func<IQueryable<Tentity>, IIncludableQueryable<Tentity, object>>? include = null, Func<IQueryable<Tentity>, IOrderedQueryable<Tentity>>? orderBy = null, bool enableTracking = false, int currentPage = 1, int pageSize = 3)
     {
-        var query=DbTable.AsQueryable();
-        if(!enableTracking) query = query.AsNoTracking();
-        if(expression is not null) query=query.Where(expression);
+        var query = DbTable.AsQueryable();
+        if (!enableTracking) query = query.AsNoTracking();
+        if (expression is not null) query = query.Where(expression);
         if (include is not null) query = include(query);
-        if(orderBy is not null) return await orderBy(query).Skip((currentPage - 1)* pageSize).Take(pageSize).ToListAsync();
+        if (orderBy is not null) return await orderBy(query).Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync();
 
         return await query.Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync();
     }
@@ -61,8 +61,8 @@ public class ReadRepository<Tentity> : IReadRepository<Tentity> where Tentity : 
     {
         DbTable.AsNoTracking();
 
-        return expression is not null 
-            ? DbTable.Where(expression).CountAsync() 
+        return expression is not null
+            ? DbTable.Where(expression).CountAsync()
             : DbTable.CountAsync();
     }
 }
