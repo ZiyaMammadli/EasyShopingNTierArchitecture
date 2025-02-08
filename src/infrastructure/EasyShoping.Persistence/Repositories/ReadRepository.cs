@@ -2,10 +2,8 @@
 using EasyShoping.Domain.Repositories;
 using EasyShoping.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
-using System.Security.Cryptography;
 
 namespace EasyShoping.Persistence.Repositories;
 

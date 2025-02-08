@@ -1,6 +1,8 @@
 ﻿using EasyShoping.Domain.Repositories;
+using EasyShoping.Domain.UnitOfWorks;
 using EasyShoping.Persistence.Contexts;
 using EasyShoping.Persistence.Repositories;
+using EasyShoping.Persistence.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +19,7 @@ public static class PersistenceRegistration
         });
         services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
         services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 
 }

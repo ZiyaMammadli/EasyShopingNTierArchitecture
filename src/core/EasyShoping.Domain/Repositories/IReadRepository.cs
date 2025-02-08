@@ -1,5 +1,4 @@
 ﻿using EasyShoping.Domain.Entities.Common;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
