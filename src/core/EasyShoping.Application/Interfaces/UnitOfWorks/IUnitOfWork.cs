@@ -1,7 +1,7 @@
 ﻿using EasyShoping.Domain.Entities.Common;
-using EasyShoping.Domain.Repositories;
+using EasyShoping.Application.Repositories;
 
-namespace EasyShoping.Domain.UnitOfWorks;
+namespace EasyShoping.Application.UnitOfWorks;
 
 public interface IUnitOfWork : IDisposable
 {

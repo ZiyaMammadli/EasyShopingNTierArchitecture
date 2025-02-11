@@ -1,5 +1,5 @@
-﻿using EasyShoping.Domain.Repositories;
-using EasyShoping.Domain.UnitOfWorks;
+﻿using EasyShoping.Application.Repositories;
+using EasyShoping.Application.UnitOfWorks;
 using EasyShoping.Persistence.Contexts;
 using EasyShoping.Persistence.Repositories;
 

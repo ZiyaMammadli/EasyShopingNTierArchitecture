@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\core\EasyShoping.Application\EasyShoping.Application.csproj" />
     <ProjectReference Include="..\..\core\EasyShoping.Domain\EasyShoping.Domain.csproj" />
   </ItemGroup>
 

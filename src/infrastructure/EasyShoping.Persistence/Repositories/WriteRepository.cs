@@ -1,5 +1,5 @@
 ﻿using EasyShoping.Domain.Entities.Common;
-using EasyShoping.Domain.Repositories;
+using EasyShoping.Application.Repositories;
 using EasyShoping.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 

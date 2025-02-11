@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
-namespace EasyShoping.Domain.Repositories;
+namespace EasyShoping.Application.Repositories;
 
 public interface IReadRepository<Tentity> where Tentity : class, IBaseEntity, new()
 {

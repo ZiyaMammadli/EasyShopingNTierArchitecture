@@ -1,6 +1,6 @@
 ﻿using EasyShoping.Domain.Entities.Common;
 
-namespace EasyShoping.Domain.Repositories;
+namespace EasyShoping.Application.Repositories;
 
 public interface IWriteRepository<TEntity> where TEntity : class, IBaseEntity, new()
 {
