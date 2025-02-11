@@ -15,7 +15,7 @@ public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQueryReque
     }
     public async Task<List<GetAllProductQueryResponse>> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
     {
-        List<Product> products = await _unitOfWork.GetReadRepository<Product>().GetAllAsync(include: query => query.Include(p => p.Category));
+        List<Product> products = await _unitOfWork.GetReadRepository<Product>().GetAllAsync(include: query => query.Include(p => p.Category).Include(p=>p.Brand));
 
         List<GetAllProductQueryResponse> getAllProductQueryResponses = products.Select(p => new GetAllProductQueryResponse
         {

@@ -1,3 +1,4 @@
+using EasyShoping.Application;
 using EasyShoping.Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddPersistenceRegistration(builder.Configuration);
+builder.Services.AddApplicationRegister();
 var env=builder.Environment;
 builder.Configuration
     .SetBasePath(env.ContentRootPath)

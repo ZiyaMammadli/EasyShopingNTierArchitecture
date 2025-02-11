@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\infrastructure\EasyShoping.Persistence\EasyShoping.Persistence.csproj" />
   </ItemGroup>
 

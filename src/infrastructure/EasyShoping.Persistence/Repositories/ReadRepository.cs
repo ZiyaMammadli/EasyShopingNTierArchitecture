@@ -17,7 +17,10 @@ public class ReadRepository<Tentity> : IReadRepository<Tentity> where Tentity : 
         _Dbcontext = easyShopingDbContext;
     }
 
-    public async Task<List<Tentity>> GetAllAsync(Expression<Func<Tentity, bool>>? expression = null, Func<IQueryable<Tentity>, IIncludableQueryable<Tentity, object>>? include = null, Func<IQueryable<Tentity>, IOrderedQueryable<Tentity>>? orderBy = null, bool enableTracking = false)
+    public async Task<List<Tentity>> GetAllAsync(Expression<Func<Tentity, bool>>? expression = null, 
+        Func<IQueryable<Tentity>, IIncludableQueryable<Tentity, object>>? include = null, 
+        Func<IQueryable<Tentity>, IOrderedQueryable<Tentity>>? orderBy = null, 
+        bool enableTracking = false)
     {
         var query = DbTable.AsQueryable();
         if (!enableTracking) query = query.AsNoTracking();
