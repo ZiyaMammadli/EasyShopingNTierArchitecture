@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\core\EasyShoping.Mapper\EasyShoping.Mapper.csproj" />
     <ProjectReference Include="..\..\infrastructure\EasyShoping.Persistence\EasyShoping.Persistence.csproj" />
   </ItemGroup>
 
