@@ -9,4 +9,5 @@ public class GetAllProductQueryResponse
     public double SalePrice { get; set; }
     public string BrandName { get; set; }
     public string CategoryName { get; set; }
+    
 }
