@@ -1,8 +1,10 @@
 ﻿using EasyShoping.Application.CustomExceptions.Brand;
 using EasyShoping.Application.CustomExceptions.Category;
 using EasyShoping.Application.CustomExceptions.Product;
-using EasyShoping.Application.Features.Products.Commands;
+using EasyShoping.Application.Features.Products.Commands.Create;
+using EasyShoping.Application.Features.Products.Commands.Update;
 using EasyShoping.Application.Features.Products.Queries;
+using EasyShoping.Application.Features.Products.Queries.GetAll;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +28,7 @@ namespace EasyShoping.Api.Controllers
             return Ok(products);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CreateProductCommandRequest request)
+        public async Task<IActionResult> CreateProduct(CreateProductCommandRequest request)
         {
             try
             {
@@ -49,6 +51,27 @@ namespace EasyShoping.Api.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+        [HttpPut]
+        public async Task<IActionResult> UpdateProduct(UpdateProductCommandRequest request)
+        {
+            try
+            {
+                var product = await _mediator.Send(request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            //catch (CategoryNotFoundException ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
+            //catch (BrandNotFoundException ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
         }
     }
 }

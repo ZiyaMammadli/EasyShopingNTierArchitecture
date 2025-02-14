@@ -1,4 +1,4 @@
-﻿using EasyShoping.Application.Features.Products.Queries;
+﻿using EasyShoping.Application.Features.Products.Queries.GetAll;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyShoping.Application;

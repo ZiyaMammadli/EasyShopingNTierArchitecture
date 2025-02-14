@@ -1,4 +1,4 @@
-﻿namespace EasyShoping.Application.Features.Products.Queries;
+﻿namespace EasyShoping.Application.Features.Products.Queries.GetAll;
 
 public class GetAllProductQueryResponse
 {
@@ -9,5 +9,5 @@ public class GetAllProductQueryResponse
     public double SalePrice { get; set; }
     public string BrandName { get; set; }
     public string CategoryName { get; set; }
-    
+    public bool IsDeleted { get; set; }
 }
