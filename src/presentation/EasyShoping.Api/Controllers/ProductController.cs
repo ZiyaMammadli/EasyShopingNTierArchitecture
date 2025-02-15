@@ -2,6 +2,7 @@
 using EasyShoping.Application.CustomExceptions.Category;
 using EasyShoping.Application.CustomExceptions.Product;
 using EasyShoping.Application.Features.Products.Commands.Create;
+using EasyShoping.Application.Features.Products.Commands.Delete;
 using EasyShoping.Application.Features.Products.Commands.Update;
 using EasyShoping.Application.Features.Products.Queries;
 using EasyShoping.Application.Features.Products.Queries.GetAll;
@@ -58,6 +59,27 @@ namespace EasyShoping.Api.Controllers
             try
             {
                 var product = await _mediator.Send(request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            //catch (CategoryNotFoundException ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
+            //catch (BrandNotFoundException ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteProduct(DeleteProductCommandRequest request)
+        {
+            try
+            {
+                await _mediator.Send(request);
                 return Ok();
             }
             catch (Exception ex)

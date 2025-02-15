@@ -19,6 +19,7 @@ public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQueryReque
 
         List<GetAllProductQueryResponse> getAllProductQueryResponses = products.Select(p => new GetAllProductQueryResponse
         {
+            Id = p.Id,
             Name = p.Name,
             Description = p.Description,
             SalePrice = p.SalePrice,
