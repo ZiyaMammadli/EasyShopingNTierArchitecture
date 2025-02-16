@@ -21,11 +21,11 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommandR
     public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
     {
         var productt=await _unitOfWork.GetReadRepository<Product>().GetSingleAsync(p=>p.Id==request.Id);
-        if (productt is null) throw new ProductNotFoundException("Product is not found");
+        if (productt is null) throw new ProductNotFoundException(404,"Product is not found");
         var category = await _unitOfWork.GetReadRepository<Category>().GetSingleAsync(p => p.Id == request.CategoryId);
-        if (category is null) throw new CategoryNotFoundException("Category is not found"); 
+        if (category is null) throw new CategoryNotFoundException(404,"Category is not found"); 
         var brand = await _unitOfWork.GetReadRepository<Brand>().GetSingleAsync(b=>b.Id == request.BrandId);
-        if (brand is null) throw new BrandNotFoundException("Brand is not found");
+        if (brand is null) throw new BrandNotFoundException(404, "Brand is not found");
         if (request.CostPrice > request.SalePrice) throw new Exception("Cost Price can not be higher than Sale Price");
 
 

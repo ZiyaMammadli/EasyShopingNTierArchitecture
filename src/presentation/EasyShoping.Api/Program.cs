@@ -1,6 +1,7 @@
 using EasyShoping.Application;
 using EasyShoping.Mapper;
 using EasyShoping.Persistence;
+using EasyShoping.Application.ExceptionMiddlewares;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -26,6 +27,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseExceptionHandlingMiddleware();
 
 app.UseHttpsRedirection();
 

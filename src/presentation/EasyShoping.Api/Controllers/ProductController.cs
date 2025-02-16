@@ -25,7 +25,7 @@ namespace EasyShoping.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
-            var products =await _mediator.Send(new GetAllProductQueryRequest());
+            var products = await _mediator.Send(new GetAllProductQueryRequest());
             return Ok(products);
         }
         [HttpPost]
@@ -36,10 +36,6 @@ namespace EasyShoping.Api.Controllers
                 var product = await _mediator.Send(request);
                 return Ok();
             }
-            //catch (Exception ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
             catch (CategoryNotFoundException ex)
             {
                 return BadRequest(ex.Message);
@@ -56,44 +52,18 @@ namespace EasyShoping.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateProduct(UpdateProductCommandRequest request)
         {
-            try
-            {
-                var product = await _mediator.Send(request);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            //catch (CategoryNotFoundException ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
-            //catch (BrandNotFoundException ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
+
+            var product = await _mediator.Send(request);
+            return Ok();
+
         }
         [HttpPost]
         public async Task<IActionResult> DeleteProduct(DeleteProductCommandRequest request)
         {
-            try
-            {
-                await _mediator.Send(request);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            //catch (CategoryNotFoundException ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
-            //catch (BrandNotFoundException ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
+
+            await _mediator.Send(request);
+            return Ok();
+
         }
     }
 }
