@@ -1,8 +1,8 @@
-﻿using EasyShoping.Application.CustomExceptions.Common;
+﻿using EasyShoping.Application.CustomExceptions.Base;
 
 namespace EasyShoping.Application.CustomExceptions.Brand;
 
-public class BrandNotFoundException:CommonException
+public class BrandNotFoundException:BaseException
 {
     public int StatusCode { get; set; }
     public BrandNotFoundException()

@@ -1,9 +1,8 @@
-﻿using EasyShoping.Application.CustomExceptions.Common;
-using Microsoft.AspNetCore.Http;
+﻿using EasyShoping.Application.CustomExceptions.Base;
 
 namespace EasyShoping.Application.CustomExceptions.Product;
 
-public class ProductNotFoundException:CommonException
+public class ProductNotFoundException:BaseException
 {
     public int StatusCode { get; set; }
     public ProductNotFoundException()

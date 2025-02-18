@@ -1,8 +1,8 @@
-﻿using EasyShoping.Application.CustomExceptions.Common;
+﻿using EasyShoping.Application.CustomExceptions.Base;
 
 namespace EasyShoping.Application.CustomExceptions.Category;
 
-public class CategoryNotFoundException:CommonException
+public class CategoryNotFoundException:BaseException
 {
     public int StatusCode { get; set; }
 
