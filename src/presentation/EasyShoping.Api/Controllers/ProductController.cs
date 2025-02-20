@@ -31,23 +31,10 @@ namespace EasyShoping.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProduct(CreateProductCommandRequest request)
         {
-            try
-            {
-                var product = await _mediator.Send(request);
-                return Ok();
-            }
-            catch (CategoryNotFoundException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (BrandNotFoundException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (ProductNameIsExistException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+
+            var product = await _mediator.Send(request);
+            return Ok();
+
         }
         [HttpPut]
         public async Task<IActionResult> UpdateProduct(UpdateProductCommandRequest request)

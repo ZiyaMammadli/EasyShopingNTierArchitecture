@@ -23,6 +23,7 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
             .NotEmpty().WithMessage("CostPrice can not being empty")
             .GreaterThan(0).WithMessage("CostPrice must be high from 0");
         RuleFor(p => p.SalePrice)
+            .Must((product,saleprice)=>saleprice >=product.CostPrice).WithMessage("Saleprice must be higer than Costprice")
             .NotEmpty().WithMessage("SalePrice can not being empty")
             .GreaterThan(0).WithMessage("SalePrice must be high from 0");
         RuleFor(p => p.IsDeleted)

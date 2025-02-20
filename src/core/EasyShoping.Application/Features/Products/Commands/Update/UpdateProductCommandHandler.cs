@@ -1,6 +1,7 @@
 ﻿using EasyShoping.Application.CustomExceptions.Brand;
 using EasyShoping.Application.CustomExceptions.Category;
 using EasyShoping.Application.CustomExceptions.Product;
+using EasyShoping.Application.Features.Products.Rules;
 using EasyShoping.Application.Interfaces.AutoMapper;
 using EasyShoping.Application.UnitOfWorks;
 using EasyShoping.Domain.Entities;
@@ -12,22 +13,21 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommandR
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly ProductRules _productRules;
 
-    public UpdateProductCommandHandler(IUnitOfWork unitOfWork,IMapper mapper)
+    public UpdateProductCommandHandler(IUnitOfWork unitOfWork,IMapper mapper,ProductRules productRules)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _productRules = productRules;
     }
     public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
     {
-        var productt=await _unitOfWork.GetReadRepository<Product>().GetSingleAsync(p=>p.Id==request.Id);
-        if (productt is null) throw new ProductNotFoundException(404,"Product is not found");
-        var category = await _unitOfWork.GetReadRepository<Category>().GetSingleAsync(p => p.Id == request.CategoryId);
-        if (category is null) throw new CategoryNotFoundException(404,"Category is not found"); 
-        var brand = await _unitOfWork.GetReadRepository<Brand>().GetSingleAsync(b=>b.Id == request.BrandId);
-        if (brand is null) throw new BrandNotFoundException(404, "Brand is not found");
-        if (request.CostPrice > request.SalePrice) throw new Exception("Cost Price can not be higher than Sale Price");
+        await _productRules.EnsureProductExistAsync(request.Id);
+        
+        await _productRules.EnsureCategoryExistAsync(request.CategoryId);
 
+        await _productRules.EnsureBrandExistAsync(request.BrandId);
 
         Product product = _mapper.Map<Product, UpdateProductCommandRequest>(request);
         product.UpdatedDated=DateTime.UtcNow;
