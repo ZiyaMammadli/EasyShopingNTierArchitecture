@@ -12,4 +12,6 @@ public class Product:BaseEntity
     public double CostPrice { get; set; }
     public Category Category { get; set; }
     public Brand Brand { get; set; }
+    public List<UserProduct> userProducts { get; set; }
+
 }

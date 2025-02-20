@@ -4,6 +4,7 @@ using EasyShoping.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EasyShoping.Persistence.Migrations
 {
     [DbContext(typeof(EasyShopingDbContext))]
-    partial class EasyShopingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250220171228_CreatedAppUserAndUserProductTables")]
+    partial class CreatedAppUserAndUserProductTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
