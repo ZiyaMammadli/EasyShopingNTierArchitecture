@@ -40,6 +40,8 @@ public class TokenService : ITokenService
             expires:DateTime.UtcNow.AddMinutes(_tokenSettings.TokenValidityInMinutes),
             signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256));
 
+        await _userManager.AddClaimsAsync(appUser, Claims);
+
         return token;
     }
 
