@@ -2,6 +2,7 @@ using EasyShoping.Application;
 using EasyShoping.Mapper;
 using EasyShoping.Persistence;
 using EasyShoping.Application.ExceptionMiddlewares;
+using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,6 +14,35 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddPersistenceRegistration(builder.Configuration);
 builder.Services.AddApplicationRegister();
 builder.Services.AddCustomMapperRegister();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title="EasyShoping", Version="v1",Description="EasyShoping swagger client." });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        Name = "Authorization",
+        Type =SecuritySchemeType.ApiKey,
+        Scheme="Bearer",
+        BearerFormat="JWT",
+        In=ParameterLocation.Header,
+        Description= "You can type token after typing 'Bearer' and leaving a space \r\n\r\n For Instance : 'Bearer' sbfbsifbsiufbsiufbsuifb"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference =new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer",
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+
 var env=builder.Environment;
 builder.Configuration
     .SetBasePath(env.ContentRootPath)

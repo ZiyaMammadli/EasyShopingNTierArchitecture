@@ -60,7 +60,7 @@ public class TokenService : ITokenService
         {
             ValidateIssuer=false,
             ValidateAudience=false,
-            ValidateIssuerSigningKey=false,
+            ValidateIssuerSigningKey=true,
             IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSettings.SecretKey)),
             ValidateLifetime=false,
         };
