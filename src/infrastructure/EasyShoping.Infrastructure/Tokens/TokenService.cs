@@ -54,8 +54,24 @@ public class TokenService : ITokenService
         return Convert.ToBase64String(num);
     }
 
-    public ClaimsPrincipal? GetPrincipalFromExpiredToken()
+    public ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token)
     {
-        throw new NotImplementedException();
+        TokenValidationParameters validationParameters = new()
+        {
+            ValidateIssuer=false,
+            ValidateAudience=false,
+            ValidateIssuerSigningKey=false,
+            IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSettings.SecretKey)),
+            ValidateLifetime=false,
+        };
+        JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+        var principial = handler.ValidateToken(token, validationParameters, out SecurityToken securityToken);
+        if (securityToken is not JwtSecurityToken jwtSecurityToken 
+            || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, 
+            StringComparison.InvariantCultureIgnoreCase))
+        {
+            throw new SecurityTokenException("Token is not found");
+        }
+        return principial;
     }
 }
