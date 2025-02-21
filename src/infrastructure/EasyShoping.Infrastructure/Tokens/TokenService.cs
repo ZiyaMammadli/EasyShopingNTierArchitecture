@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace EasyShoping.Infrastructure.Tokens;
@@ -14,7 +15,7 @@ public class TokenService : ITokenService
     private readonly UserManager<AppUser> _userManager;
     private TokenSettings _tokenSettings;
 
-    public TokenService(IOptions<TokenSettings> options,UserManager<AppUser> userManager)
+    public TokenService(IOptions<TokenSettings> options, UserManager<AppUser> userManager)
     {
         _tokenSettings = options.Value;
         _userManager = userManager;
@@ -28,16 +29,16 @@ public class TokenService : ITokenService
             new Claim(ClaimTypes.NameIdentifier,appUser.Id.ToString()),
         };
 
-        var userRoles =await _userManager.GetRolesAsync(appUser);
+        var userRoles = await _userManager.GetRolesAsync(appUser);
         Claims.AddRange(userRoles.Select(r => new Claim(ClaimTypes.Role, r)));
 
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSettings.SecretKey));
 
         var token = new JwtSecurityToken(
-            issuer:_tokenSettings.Issuer,
-            audience:_tokenSettings.Audience,
-            claims:Claims,
-            expires:DateTime.UtcNow.AddMinutes(_tokenSettings.TokenValidityInMinutes),
+            issuer: _tokenSettings.Issuer,
+            audience: _tokenSettings.Audience,
+            claims: Claims,
+            expires: DateTime.UtcNow.AddMinutes(_tokenSettings.TokenValidityInMinutes),
             signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256));
 
         await _userManager.AddClaimsAsync(appUser, Claims);
@@ -47,7 +48,10 @@ public class TokenService : ITokenService
 
     public string GenerateRefreshToken()
     {
-        throw new NotImplementedException();
+        byte[] num = new byte[32];
+        using RandomNumberGenerator rng = RandomNumberGenerator.Create();
+        rng.GetBytes(num);
+        return Convert.ToBase64String(num);
     }
 
     public ClaimsPrincipal? GetPrincipalFromExpiredToken()
