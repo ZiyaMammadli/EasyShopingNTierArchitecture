@@ -1,10 +1,6 @@
-﻿using EasyShoping.Application.CustomExceptions.Brand;
-using EasyShoping.Application.CustomExceptions.Category;
-using EasyShoping.Application.CustomExceptions.Product;
-using EasyShoping.Application.Features.Products.Commands.Create;
+﻿using EasyShoping.Application.Features.Products.Commands.Create;
 using EasyShoping.Application.Features.Products.Commands.Delete;
 using EasyShoping.Application.Features.Products.Commands.Update;
-using EasyShoping.Application.Features.Products.Queries;
 using EasyShoping.Application.Features.Products.Queries.GetAll;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
