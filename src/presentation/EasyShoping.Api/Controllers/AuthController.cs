@@ -1,4 +1,5 @@
 ﻿using EasyShoping.Application.Features.Auth.Commands.Login;
+using EasyShoping.Application.Features.Auth.Commands.RefreshToken;
 using EasyShoping.Application.Features.Auth.Commands.Register;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -25,6 +26,12 @@ namespace EasyShoping.Api.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> Login(LoginCommandRequest request)
+        {
+            var response = await _mediator.Send(request);
+            return Ok(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> RefreshToken(RefreshTokenCommandRequest request)
         {
             var response = await _mediator.Send(request);
             return Ok(response);

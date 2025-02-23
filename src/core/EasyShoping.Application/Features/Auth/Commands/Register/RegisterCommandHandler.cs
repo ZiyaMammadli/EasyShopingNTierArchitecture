@@ -11,22 +11,22 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommandRequest, Un
 {
     private readonly IMapper _mapper;
     private readonly UserManager<AppUser> _userManager;
-    private readonly RegisterRule _registerRule;
+    private readonly AuthRule _authRule;
     private readonly RoleManager<Role> _roleManager;
 
     public RegisterCommandHandler(IMapper mapper, 
         UserManager<AppUser> userManager, 
-        RegisterRule registerRule,
+        AuthRule authRule,
         RoleManager<Role> roleManager)
     {
         _mapper = mapper;
         _userManager = userManager;
-        _registerRule = registerRule;
+        _authRule = authRule;
         _roleManager = roleManager;
     }
     public async Task<Unit> Handle(RegisterCommandRequest request, CancellationToken cancellationToken)
     {
-        await _registerRule.EnsureUserExistAsync(await _userManager.FindByEmailAsync(request.Email));
+        await _authRule.EnsureUserExistAsync(await _userManager.FindByEmailAsync(request.Email));
 
         var user = _mapper.Map<AppUser, RegisterCommandRequest>(request);
         user.RefreshToken = "token";

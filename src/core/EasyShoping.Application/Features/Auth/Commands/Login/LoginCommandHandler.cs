@@ -13,28 +13,28 @@ public class LoginCommandHandler : IRequestHandler<LoginCommandRequest, LoginCom
 {
     private readonly UserManager<AppUser> _userManager;
     private readonly RoleManager<Role> _roleManager;
-    private readonly LoginRule _loginRule;
+    private readonly AuthRule _authRule;
     private readonly ITokenService _tokenService;
     private readonly IConfiguration _configuration;
 
     public LoginCommandHandler(UserManager<AppUser> userManager,
         RoleManager<Role> roleManager,
-        LoginRule loginRule,
+        AuthRule authRule,
         ITokenService tokenService,
         IConfiguration configuration)
     {
         _userManager = userManager;
         _roleManager = roleManager;
-        _loginRule = loginRule;
+        _authRule = authRule;
         _tokenService = tokenService;
         _configuration = configuration;
     }
     public async Task<LoginCommandResponse> Handle(LoginCommandRequest request, CancellationToken cancellationToken)
     {
         AppUser user = await _userManager.FindByEmailAsync(request.Email);
-        await _loginRule.EnsureUserNotFound(user);
+        await _authRule.EnsureUserNotFound(user);
         var checkPassword = await _userManager.CheckPasswordAsync(user, request.Password);
-        await _loginRule.EnsureUserPasswordCheck(checkPassword);
+        await _authRule.EnsureUserPasswordCheck(checkPassword);
         IList<string> roles = await _userManager.GetRolesAsync(user);
         JwtSecurityToken token = await _tokenService.CreateToken(user, roles);
         string _token =new JwtSecurityTokenHandler().WriteToken(token);
@@ -46,7 +46,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommandRequest, LoginCom
         await _userManager.UpdateSecurityStampAsync(user);
         LoginCommandResponse response = new LoginCommandResponse()
         {
-            Token=_token,
+            AccessToken = _token,
             RefreshToken=refreshToken,
             Expiration=token.ValidTo,
         };
