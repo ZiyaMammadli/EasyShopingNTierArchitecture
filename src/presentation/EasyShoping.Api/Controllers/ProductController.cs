@@ -3,6 +3,7 @@ using EasyShoping.Application.Features.Products.Commands.Delete;
 using EasyShoping.Application.Features.Products.Commands.Update;
 using EasyShoping.Application.Features.Products.Queries.GetAll;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyShoping.Api.Controllers
@@ -19,6 +20,7 @@ namespace EasyShoping.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllProducts()
         {
             var products = await _mediator.Send(new GetAllProductQueryRequest());

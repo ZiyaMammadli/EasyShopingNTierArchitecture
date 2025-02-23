@@ -3,6 +3,7 @@ using EasyShoping.Mapper;
 using EasyShoping.Persistence;
 using EasyShoping.Application.ExceptionMiddlewares;
 using Microsoft.OpenApi.Models;
+using EasyShoping.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddPersistenceRegistration(builder.Configuration);
 builder.Services.AddApplicationRegister();
 builder.Services.AddCustomMapperRegister();
+builder.Services.AddInfrastructureRegistration(builder.Configuration);
 
 builder.Services.AddSwaggerGen(c =>
 {

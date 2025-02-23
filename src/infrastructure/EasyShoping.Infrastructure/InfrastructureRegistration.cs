@@ -10,7 +10,7 @@ namespace EasyShoping.Infrastructure;
 
 public static class InfrastructureRegistration
 {
-    public static void AddInfrastructureRegistration(IServiceCollection services,IConfiguration configuration)
+    public static void AddInfrastructureRegistration(this IServiceCollection services,IConfiguration configuration)
     {
         services.Configure<TokenSettings>(configuration.GetSection("JWT"));
         services.AddTransient<ITokenService, TokenService>();
@@ -21,12 +21,12 @@ public static class InfrastructureRegistration
         }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, opt =>
         {
             opt.SaveToken = true;
-            opt.TokenValidationParameters = new TokenValidationParameters()
+            opt.TokenValidationParameters = new ()
             {
                 ValidateIssuer = false,
                 ValidateAudience = false,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"])),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:SecretKey"])),
                 ValidateLifetime = false,
                 ValidIssuer = configuration["JWT:Issuer"],
                 ValidAudience = configuration["JWT:Audience"],

@@ -1,4 +1,5 @@
-﻿using EasyShoping.Application.Features.Auth.Commands.Register;
+﻿using EasyShoping.Application.Features.Auth.Commands.Login;
+using EasyShoping.Application.Features.Auth.Commands.Register;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,12 @@ namespace EasyShoping.Api.Controllers
         {
             await _mediator.Send(request);
             return StatusCode(StatusCodes.Status201Created);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginCommandRequest request)
+        {
+            var response = await _mediator.Send(request);
+            return Ok(response);
         }
     }
 }
