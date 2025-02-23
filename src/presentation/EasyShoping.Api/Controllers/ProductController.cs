@@ -10,6 +10,7 @@ namespace EasyShoping.Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -20,7 +21,6 @@ namespace EasyShoping.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetAllProducts()
         {
             var products = await _mediator.Send(new GetAllProductQueryRequest());

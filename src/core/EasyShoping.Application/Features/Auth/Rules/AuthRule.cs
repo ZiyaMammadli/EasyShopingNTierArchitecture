@@ -12,6 +12,11 @@ public class AuthRule:BaseRules
         if (user is null) throw new UserNotFoundException(404, "User is not found");
         return Task.CompletedTask;
     }
+    public Task EnsureUsersNotFound(List<AppUser> users)
+    {
+        if (users is null) throw new UserNotFoundException(404, "Users are not found");
+        return Task.CompletedTask;
+    }
     public Task EnsureUserPasswordCheck(bool isPasswordCheck)
     {
         if (!isPasswordCheck) throw new InvalidUserPasswordException(400, "Email or Password is incorrect");

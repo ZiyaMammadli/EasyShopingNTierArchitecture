@@ -1,6 +1,8 @@
 ﻿using EasyShoping.Application.Features.Auth.Commands.Login;
 using EasyShoping.Application.Features.Auth.Commands.RefreshToken;
 using EasyShoping.Application.Features.Auth.Commands.Register;
+using EasyShoping.Application.Features.Auth.Commands.Revoke;
+using EasyShoping.Application.Features.Auth.Commands.RevokeAll;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +37,18 @@ namespace EasyShoping.Api.Controllers
         {
             var response = await _mediator.Send(request);
             return Ok(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Revoke(RevokeCommandRequest request)
+        {
+            await _mediator.Send(request);
+            return Ok();
+        }
+        [HttpPost]
+        public async Task<IActionResult> RevokeAll()
+        {
+            await _mediator.Send(new RevokeAllCommandRequest());
+            return Ok();
         }
     }
 }
